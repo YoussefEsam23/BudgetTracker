@@ -18,7 +18,7 @@ export class Budget implements OnInit, OnDestroy {
   
   totalIncome = 0;
   totalBudgeted = 0;
-  totalSaved = 0; // <-- NEW: Track total money locked in goals
+  totalSaved = 0; 
   unallocatedFunds = 0;
 
   private authSub!: Subscription;
@@ -56,12 +56,10 @@ export class Budget implements OnInit, OnDestroy {
       this.totalBudgeted = 0;
       this.totalSaved = 0; 
       
-      // --- NEW: Get the current month and year ---
       const currentDate = new Date();
       const currentMonth = currentDate.getMonth();
       const currentYear = currentDate.getFullYear();
 
-      // 1. Calculate Income Pool (Only for this month!)
       transactionsData.forEach(t => {
         const txDate = new Date(t.date);
         if (t.type === 'income' && txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear) {
@@ -69,23 +67,18 @@ export class Budget implements OnInit, OnDestroy {
         }
       });
 
-      // 2. Calculate Money locked in Budget Categories (Limits stay the same every month)
       budgetsData.forEach(b => {
         this.totalBudgeted += (Number(b.amount) || 0);
       });
 
-      // 3. Calculate Money locked in Savings Goals (Goals carry over month-to-month)
       goalsData.forEach(g => {
         this.totalSaved += (Number(g.savedAmount) || 0); 
       });
 
-      // Leftover Money = Income (This Month) - Planned Spending - Locked Savings
       this.unallocatedFunds = this.totalIncome - this.totalBudgeted - this.totalSaved;
 
-      // 4. Map the budgets and calculate progress
       this.budgets = budgetsData.map(budget => {
         
-        // --- THE FIX: Only count expenses from THIS month ---
         const spent = transactionsData
           .filter(t => {
             const txDate = new Date(t.date);
@@ -115,7 +108,6 @@ export class Budget implements OnInit, OnDestroy {
     if (this.budgetForm.valid && this.userId) {
       const limitAmt = Number(this.budgetForm.value.amount);
 
-      // Warning includes the new calculation!
       if (!this.editingId && limitAmt > this.unallocatedFunds) {
         if(!confirm(`Warning: This limit ($${limitAmt}) is larger than your Unallocated Funds ($${this.unallocatedFunds}). Create anyway?`)) {
           return;

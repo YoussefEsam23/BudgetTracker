@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select'; // <-- NEW
+import { MatSelectModule } from '@angular/material/select'; 
 
 // Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -58,7 +58,7 @@ const firebaseConfig = {
     MatFormFieldModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatSelectModule // <-- NEW: Added here
+    MatSelectModule 
   ],
   providers: [
     provideAnimations(), 

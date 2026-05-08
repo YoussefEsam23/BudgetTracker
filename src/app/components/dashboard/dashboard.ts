@@ -59,7 +59,6 @@ export class Dashboard implements OnInit, OnDestroy {
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
 
-      // 1. Calculate Core Balances
       transactions.forEach(t => {
         if (t.type === 'income') this.totalIncome += Number(t.amount);
         if (t.type === 'expense') this.totalExpense += Number(t.amount);
@@ -68,12 +67,10 @@ export class Dashboard implements OnInit, OnDestroy {
 
       goals.forEach(g => { totalSavings += Number(g.savedAmount); });
 
-      // 2. Get Recent 4 Transactions
       this.recentTransactions = [...transactions]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 4);
 
-      // 3. Find Budget Danger Zones (> 85% spent this month)
       this.budgetAlerts = budgets.map(b => {
         const spentThisMonth = transactions
           .filter(t => t.type === 'expense' && t.category === b.category && 
@@ -85,7 +82,6 @@ export class Dashboard implements OnInit, OnDestroy {
         return { ...b, spent: spentThisMonth, percentage };
       }).filter(b => b.percentage >= 85);
 
-      // 4. Find Goal Closest to Completion
       if (goals.length > 0) {
         this.topGoal = goals.map(g => {
           let percent = (Number(g.savedAmount) / Number(g.targetAmount)) * 100;
@@ -121,10 +117,9 @@ export class Dashboard implements OnInit, OnDestroy {
     let chartData = [expense, savings, remaining > 0 ? remaining : 0];
     let bgColors = ['#ef4444', '#3f51b5', '#10b981'];
 
-    // --- THE FIX: Prevent Chart from vanishing if all values are 0 ---
     if (expense === 0 && savings === 0 && remaining <= 0) {
-      chartData = [1]; // Draw one solid piece
-      bgColors = ['#e2e8f0']; // Light gray color
+      chartData = [1]; 
+      bgColors = ['#e2e8f0'];
       dynamicLabels = ['No Data Yet (0%)'];
     }
 

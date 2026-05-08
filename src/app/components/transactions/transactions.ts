@@ -42,7 +42,7 @@ export class Transactions implements OnInit, OnDestroy {
       amount: ['', [Validators.required, Validators.min(1)]],
       type: ['expense', Validators.required],
       category: [''], 
-      newCategory: [''], // <-- NEW: Holds the custom typed category
+      newCategory: [''], 
       isRecurring: [false]
     });
 
@@ -65,14 +65,12 @@ export class Transactions implements OnInit, OnDestroy {
     this.dataSub = this.financeService.getUserTransactions(this.userId).subscribe(data => {
       this.transactions = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       
-      // --- UPDATED: Merge Defaults with History ---
       const historySources = this.transactions
         .filter(t => t.type === 'income' && t.category && t.category !== 'Uncategorized')
         .map(t => t.category);
       
       const defaultSources = ['Salary', 'Freelance', 'Investments', 'Gifts', 'Refunds'];
       
-      // Combine them and remove duplicates
       this.uniqueIncomeSources = [...new Set([...defaultSources, ...historySources])]; 
 
       this.runFilters(); 
@@ -117,10 +115,8 @@ export class Transactions implements OnInit, OnDestroy {
   onSubmit() {
     if (this.transactionForm.valid && this.userId) {
       
-      // --- NEW: Figure out which category to use ---
       let finalCategory = this.transactionForm.value.category;
       
-      // If they selected "+ Add New", grab the text from the hidden input!
       if (this.transactionForm.value.type === 'income' && finalCategory === 'NEW_CUSTOM') {
         finalCategory = this.transactionForm.value.newCategory || 'Uncategorized';
       }
@@ -150,10 +146,8 @@ export class Transactions implements OnInit, OnDestroy {
   editTransaction(tx: any) {
     this.editingId = tx.id; 
     
-    // Check if the history category is in our dropdown list
     let catValue = tx.category;
     if (tx.type === 'income' && !this.uniqueIncomeSources.includes(catValue) && catValue !== 'Uncategorized') {
-        // If it's a completely unknown category, add it dynamically so the dropdown doesn't break
         this.uniqueIncomeSources.push(catValue);
     }
 

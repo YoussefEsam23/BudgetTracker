@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth'; // Import the service
+import { AuthService } from '../../services/auth/auth'; 
 
 @Component({
   selector: 'app-login',
@@ -12,17 +12,16 @@ import { AuthService } from '../../services/auth/auth'; // Import the service
 export class Login implements OnInit {
   loginForm!: FormGroup;
   isLoginMode = true;
-  errorMessage = ''; // To show user friendly errors
+  errorMessage = ''; 
 
   constructor(
     private fb: FormBuilder, 
     private router: Router,
-    private authService: AuthService // Inject the service
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      // Firebase needs an email, so we validate for email format!
       email: ['', [Validators.required, Validators.email]], 
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -48,11 +47,9 @@ export class Login implements OnInit {
           console.log('Signup successful!');
         }
         
-        // Go to dashboard on success!
         this.router.navigate(['/dashboard']);
         
       } catch (error: any) {
-        // Catch Firebase errors (wrong password, etc.)
         console.error('Firebase Auth Error:', error);
         this.errorMessage = error.message; 
       }

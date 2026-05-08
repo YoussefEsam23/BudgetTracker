@@ -14,7 +14,7 @@ export class Goals implements OnInit, OnDestroy {
   goalForm!: FormGroup;
   goals: any[] = [];
   userId: string = '';
-  editingId: string | null = null; // <-- NEW
+  editingId: string | null = null; 
 
   private authSub!: Subscription;
   private dataSub!: Subscription;
@@ -73,7 +73,6 @@ export class Goals implements OnInit, OnDestroy {
     }
   }
 
-  // --- NEW CRUD METHODS ---
   editGoal(g: any) {
     this.editingId = g.id;
     this.goalForm.patchValue({

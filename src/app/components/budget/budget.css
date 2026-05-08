@@ -1,146 +1,149 @@
-.page-title {
-  color: var(--primary-blue);
-  margin-bottom: 24px;
-  font-weight: 500;
-  font-size: 28px;
+/* ========================================== */
+/* BASE LAYOUT & ANIMATIONS                   */
+/* ========================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-/* Overview Header */
+.page-title {
+  color: #1e293b;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================== */
+/* TOP ROW: OVERVIEW CARDS (GRADIENTS)        */
+/* ========================================== */
 .overview-cards {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   margin-bottom: 32px;
 }
 
 .overview-card {
-  flex: 1;
-  padding: 16px 24px;
-  border-radius: var(--radius-lg);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 16px !important;
+  color: white !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
 }
 
+/* Override the HTML inline styles with beautiful gradients */
+.income-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; } /* Green */
+.overview-card[style*="#3f51b5"] { background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important; } /* Indigo */
+.expense-bg { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; } /* Red (Over-budget) */
+
 .overview-card mat-card-subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-transform: uppercase;
   letter-spacing: 1px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .overview-card h2 {
-  font-size: 32px;
-  margin: 8px 0 0 0;
-  font-weight: 700;
+  font-size: 36px;
+  margin: 0;
+  font-weight: 800;
 }
 
-.income-bg { background-color: var(--income-green); }
-.expense-bg { background-color: #f59e0b; } /* Amber color for spent */
+.savings-hint {
+  font-size: 12px;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  font-weight: 500;
+}
 
-/* Layout */
+/* ========================================== */
+/* MAIN LAYOUT STRUCTURE                      */
+/* ========================================== */
 .budget-layout {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.form-card, .list-card {
+/* The Left Side (Form) */
+.form-card {
   flex: 1;
-  min-width: 300px;
-  padding: 24px;
-  border-radius: var(--radius-lg);
+  min-width: 320px;
+  border-radius: 16px !important;
+  border-top: 5px solid #3b82f6 !important; /* Blue Accent */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
-.budget-form {
-  margin-top: 16px;
+/* The Right Side (List) */
+.list-card {
+  flex: 2;
+  min-width: 350px;
+  border-radius: 16px !important;
+  border-top: 5px solid #8b5cf6 !important; /* Purple Accent */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
-.mt-16 {
-  margin-top: 16px;
-  height: 45px;
-}
+/* Form Spacing */
+.budget-form { margin-top: 8px; }
+.full-width { width: 100%; }
+.form-actions { display: flex; flex-direction: column; }
+.mt-16 { margin-top: 16px; }
+.mt-8 { margin-top: 8px; }
 
-/* Budget List & Progress Bars */
+/* ========================================== */
+/* BUDGET LIST & ITEMS (PREMIUM HOVER)        */
+/* ========================================== */
 .budget-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-top: 16px;
+  gap: 16px;
+}
+
+.budget-item {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+/* 🌟 GENIUS TOUCH: Hover Elevation! */
+.budget-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
 }
 
 .budget-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .category-name {
-  font-weight: 700;
   font-size: 18px;
-  color: #333;
-}
-
-.amounts {
-  font-size: 14px;
-  color: gray;
-  font-weight: 600;
-}
-
-.progress-bg {
-  width: 100%;
-  height: 12px;
-  background-color: #e2e8f0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: var(--primary-blue);
-  border-radius: 10px;
-  transition: width 0.5s ease-in-out;
-}
-
-/* Dynamic Colors based on spending */
-.warning-fill {
-  background-color: #f59e0b; /* Amber if close to limit */
-}
-
-.over-budget-fill {
-  background-color: var(--expense-red); /* Red if over limit */
-}
-
-.over-budget-text {
-  color: var(--expense-red);
-}
-
-.status-text {
-  font-size: 12px;
-  color: var(--expense-red);
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-.empty-state {
-  text-align: center;
-  color: gray;
-  padding: 32px 0;
-}
-
-.full-width { width: 100%; }
-
-.form-actions {
-  display: flex;
-  flex-direction: column;
-}
-
-.mt-8 { margin-top: 8px; }
-.mt-16 { margin-top: 16px; }
-
-.budget-item {
-  padding: 16px;
-  border-radius: 8px;
-  background: #fdfdfd;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border: 1px solid #eee;
+  font-weight: 700;
+  color: #1e293b;
 }
 
 .budget-actions-wrapper {
@@ -149,24 +152,84 @@
   gap: 16px;
 }
 
+.amounts {
+  font-size: 15px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 20px; /* Pill shape for amounts */
+}
+
+/* ========================================== */
+/* TRAFFIC LIGHT PROGRESS BARS                */
+/* ========================================== */
+.progress-bg {
+  width: 100%;
+  height: 14px;
+  background-color: #f1f5f9; /* Soft gray track */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* Inner shadow for depth */
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #3b82f6; /* Standard Blue */
+  border-radius: 10px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth snapping animation */
+}
+
+/* 🌟 GENIUS TOUCH: Semantic "Traffic Light" Colors */
+.warning-fill {
+  background-color: #f59e0b !important; /* Amber if close to limit */
+}
+
+.over-budget-fill {
+  background-color: #ef4444 !important; /* Red if over limit */
+}
+
+.over-budget-text {
+  color: #ef4444 !important;
+  background: #fef2f2 !important; /* Light red pill background */
+}
+
+.status-text {
+  font-size: 13px;
+  color: #ef4444;
+  margin-top: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========================================== */
+/* ACTION BUTTONS (CLEAN UI TRICK)            */
+/* ========================================== */
+/* Hide the edit/delete buttons until hover */
 .action-buttons {
   display: flex;
-  opacity: 0.3;
-  transition: opacity 0.2s ease;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.2s ease;
 }
 
 .budget-item:hover .action-buttons {
   opacity: 1;
+  transform: translateX(0);
 }
 
 @media (max-width: 768px) {
-  .action-buttons { opacity: 1; }
+  .action-buttons { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
 }
 
-.savings-hint {
-  font-size: 13px;
-  margin-top: 8px;
-  opacity: 0.85;
-  font-weight: 500;
+.empty-state {
+  text-align: center;
+  color: #94a3b8;
+  padding: 32px 0;
   font-style: italic;
 }

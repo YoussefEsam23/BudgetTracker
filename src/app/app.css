@@ -1,15 +1,15 @@
 /* --- MODERN NAVIGATION TABS --- */
 .nav-links {
   display: flex;
-  gap: 8px; /* Adds clean spacing between the buttons */
+  gap: 8px; 
   margin-left: 24px;
 }
 
 /* Default unselected state */
 .nav-links a[mat-button] {
-  color: #64748b; /* Professional Slate Gray */
+  color: #64748b; 
   font-weight: 500;
-  border-radius: 8px; /* Slightly rounded edges */
+  border-radius: 8px; 
   padding: 0 16px;
   transition: all 0.2s ease-in-out;
   display: flex;

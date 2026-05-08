@@ -1,16 +1,55 @@
-.page-title {
-  color: var(--primary-blue);
-  margin-bottom: 24px;
-  font-weight: 500;
-  font-size: 28px;
+/* ========================================== */
+/* BASE LAYOUT & ANIMATIONS                   */
+/* ========================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-/* TOP ROW: Three Cards */
+.page-title {
+  color: #1e293b; /* Dark slate */
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================== */
+/* LOADING SPINNER                            */
+/* ========================================== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: #3b82f6; /* Primary blue */
+}
+
+.loading-container p {
+  margin-top: 16px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ========================================== */
+/* TOP ROW: COLORFUL OVERVIEW CARDS           */
+/* ========================================== */
 .overview-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .overview-cards mat-card {
@@ -18,140 +57,203 @@
   flex-direction: row;
   align-items: center;
   padding: 24px;
+  border-radius: 16px !important;
+  color: white !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Vibrant Gradients for the Top 3 Cards */
+.balance-card { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important; } /* Blue */
+.income-card { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; } /* Green */
+.expense-card { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; } /* Red */
+
 .card-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  margin-right: 16px;
-  opacity: 0.8;
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-right: 20px;
+  opacity: 0.9;
+}
+
+.card-text mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .card-text h2 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
 }
 
 /* ========================================== */
-/* OVERVIEW CARDS: LIGHT COLOR THEMING        */
+/* MIDDLE ROW: SMART HUB GRID                 */
 /* ========================================== */
-
-/* 1. BALANCE CARD (Soft Pale Blue) */
-.balance-card { 
-  background-color: #eff6ff !important; 
-  border: 1px solid #bfdbfe !important; 
-}
-.balance-card .card-icon { color: #3b82f6; }
-.balance-card h2 { color: #1e293b; }
-
-/* 2. INCOME CARD (Soft Pale Green) */
-.income-card { 
-  background-color: #f0fdf4 !important; 
-  border: 1px solid #bbf7d0 !important; 
-}
-.income-card .card-icon { color: #10b981; }
-.income-card h2 { color: #14532d; }
-
-/* 3. EXPENSE CARD (Soft Pale Red) */
-.expense-card { 
-  background-color: #fef2f2 !important; 
-  border: 1px solid #fecaca !important; 
-}
-.expense-card .card-icon { color: #ef4444; }
-.expense-card h2 { color: #7f1d1d; }
-
-
-/* MIDDLE ROW: Smart Hub Grid */
 .smart-hub-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Chart takes 2/3, Feed takes 1/3 */
+  grid-template-columns: 2fr 1fr;
   gap: 24px;
 }
 
 @media (max-width: 900px) {
-  .smart-hub-grid { grid-template-columns: 1fr; }
+  .smart-hub-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
+/* The Main Chart Card */
 .chart-card {
-  padding: 24px;
-  height: 100%;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  border-top: 5px solid #3b82f6 !important; /* Blue Accent Border */
 }
 
 .chart-container {
-  position: relative;
   height: 350px;
-  width: 100%;
+  position: relative;
   margin-top: 16px;
 }
 
+/* ========================================== */
+/* RIGHT COLUMN: FEEDS & ALERTS               */
+/* ========================================== */
 .feed-column {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Feed Module Styles */
+.feed-column mat-card {
+  border-radius: 16px !important;
+}
+
 .header-icon {
   margin-right: 8px;
   color: #64748b;
 }
 
-.warn-icon { color: #ef4444; }
+/* --- Goal Spotlight Card --- */
+.spotlight-card {
+  border-top: 5px solid #8b5cf6 !important; /* Purple Accent Border */
+}
 
-/* Goal Spotlight */
 .spotlight-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .progress-bg {
-  width: 100%;
-  height: 8px;
-  background-color: #e2e8f0;
-  border-radius: 4px;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  height: 12px;
   overflow: hidden;
+  margin-bottom: 12px;
 }
 
 .progress-fill {
+  background-color: #8b5cf6; /* Matching Purple Fill */
   height: 100%;
-  background-color: #3f51b5;
-  transition: width 0.8s ease;
+  border-radius: 10px;
+  transition: width 1s ease-in-out;
 }
 
 .spotlight-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
-  margin-top: 8px;
+  margin: 0;
+  text-align: center;
   font-weight: 500;
 }
 
-/* Alerts */
+/* --- Budget Warnings Card --- */
+.alert-card {
+  border-top: 5px solid #f59e0b !important; /* Amber Accent Border */
+  background-color: #fffbeb !important; /* Very soft yellow background */
+}
+
+.warn-icon {
+  color: #f59e0b !important;
+}
+
 .alert-item {
   display: flex;
   justify-content: space-between;
   padding: 12px 0;
-  border-bottom: 1px solid #f1f5f9;
-  color: #ef4444;
+  border-bottom: 1px solid #fde68a;
+}
+
+.alert-item:last-child {
+  border-bottom: none;
+}
+
+.alert-name {
+  color: #92400e;
   font-weight: 600;
 }
-.alert-item:last-child { border-bottom: none; padding-bottom: 0; }
 
-/* Activity Feed */
-.activity-list { display: flex; flex-direction: column; gap: 12px; }
+.alert-percent {
+  color: #b45309;
+  font-weight: 800;
+}
+
+/* --- Recent Activity Card --- */
+.activity-card {
+  border-top: 5px solid #10b981 !important; /* Green Accent Border */
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .activity-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.activity-text { display: flex; flex-direction: column; }
-.activity-date { font-size: 11px; color: #888; }
-.activity-amount { font-weight: 700; }
-.activity-amount.income { color: #10b981; }
-.activity-amount.expense { color: #0f172a; }
+.activity-item:hover {
+  transform: translateX(5px);
+  background-color: #f1f5f9;
+}
+
+.activity-text strong {
+  display: block;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+.activity-date {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.activity-amount {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+/* Semantic Colors for the Amounts */
+.activity-amount.income { color: #10b981; } /* Green for positive */
+.activity-amount.expense { color: #ef4444; } /* Red for negative */
+
+.empty-state {
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 24px 0;
+}

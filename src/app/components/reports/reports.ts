@@ -15,7 +15,7 @@ import html2canvas from 'html2canvas';
 export class Reports implements OnInit, OnDestroy {
   @ViewChild('incomeChartCanvas') incomeChartCanvas!: ElementRef;
   @ViewChild('varianceChartCanvas') varianceChartCanvas!: ElementRef;
-  @ViewChild('breakdownChartCanvas') breakdownChartCanvas!: ElementRef; // <-- NEW
+  @ViewChild('breakdownChartCanvas') breakdownChartCanvas!: ElementRef; 
 
   userId: string = '';
   isLoading = true;
@@ -23,7 +23,7 @@ export class Reports implements OnInit, OnDestroy {
 
   incomeChart: any;
   varianceChart: any;
-  breakdownChart: any; // <-- NEW
+  breakdownChart: any; 
 
   summary = { income: 0, expenses: 0, net: 0 };
   goalsProgress: any[] = [];
@@ -56,7 +56,6 @@ export class Reports implements OnInit, OnDestroy {
       this.financeService.getUserGoals(this.userId)
     ]).subscribe(([transactions, budgets, goals]) => {
       
-      // 1. CASH FLOW
       let totalIncome = 0;
       let totalExpense = 0;
 
@@ -71,7 +70,6 @@ export class Reports implements OnInit, OnDestroy {
         net: totalIncome - totalExpense
       };
 
-      // 2. BUDGET VARIANCE
       let categoryLabels: string[] = [];
       let limitData: number[] = [];
       let spentData: number[] = [];
@@ -87,11 +85,9 @@ export class Reports implements OnInit, OnDestroy {
         spentData.push(spent);
       });
 
-      // 3. EXPENSE BREAKDOWN (NEW LOGIC)
       let breakdownMap: { [key: string]: number } = {};
       transactions.forEach(t => {
         if (t.type === 'expense') {
-          // If category is blank or missing, label it Uncategorized
           const cat = t.category && t.category !== '' ? t.category : 'Uncategorized';
           breakdownMap[cat] = (breakdownMap[cat] || 0) + Number(t.amount);
         }
@@ -100,7 +96,6 @@ export class Reports implements OnInit, OnDestroy {
       const breakdownLabels = Object.keys(breakdownMap);
       const breakdownData = Object.values(breakdownMap);
 
-      // 4. SAVINGS PROGRESS
       this.goalsProgress = goals.map(g => {
         let percent = (Number(g.savedAmount) / Number(g.targetAmount)) * 100;
         return {
@@ -118,7 +113,7 @@ export class Reports implements OnInit, OnDestroy {
       setTimeout(() => {
         this.renderIncomeChart(totalIncome, totalExpense);
         this.renderVarianceChart(categoryLabels, limitData, spentData);
-        this.renderBreakdownChart(breakdownLabels, breakdownData); // <-- NEW
+        this.renderBreakdownChart(breakdownLabels, breakdownData); 
       }, 50);
     });
   }
@@ -193,16 +188,20 @@ export class Reports implements OnInit, OnDestroy {
     });
   }
 
-  // --- NEW: Category Breakdown Chart ---
   renderBreakdownChart(labels: string[], data: number[]) {
     if (!this.breakdownChartCanvas) return;
     if (this.breakdownChart) this.breakdownChart.destroy();
 
-    // A beautiful array of colors for the different pie slices
-    const pieColors = [
-      '#ef4444', '#f97316', '#f59e0b', '#84cc16', 
-      '#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899'
-    ];
+      const generateDynamicColors = (count: number) => {
+      const colors = [];
+      for (let i = 0; i < count; i++) {
+        const hue = (i * (360 / count)) % 360; 
+        colors.push(`hsl(${hue}, 70%, 55%)`);
+      }
+      return colors;
+    };
+
+    const dynamicColors = generateDynamicColors(labels.length);
 
     this.breakdownChart = new Chart(this.breakdownChartCanvas.nativeElement, {
       type: 'doughnut',
@@ -210,7 +209,7 @@ export class Reports implements OnInit, OnDestroy {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: pieColors,
+          backgroundColor: dynamicColors,
           hoverOffset: 4
         }]
       },
@@ -218,7 +217,7 @@ export class Reports implements OnInit, OnDestroy {
         responsive: true, 
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'right' } // Puts the labels nicely to the side
+          legend: { position: 'right' } 
         }
       }
     });
@@ -229,6 +228,6 @@ export class Reports implements OnInit, OnDestroy {
     if (this.dataSub) this.dataSub.unsubscribe();
     if (this.incomeChart) this.incomeChart.destroy();
     if (this.varianceChart) this.varianceChart.destroy();
-    if (this.breakdownChart) this.breakdownChart.destroy(); // Cleanup
+    if (this.breakdownChart) this.breakdownChart.destroy(); 
   }
 }
