@@ -1,0 +1,39 @@
+/* --- MODERN NAVIGATION TABS --- */
+.nav-links {
+  display: flex;
+  gap: 8px; /* Adds clean spacing between the buttons */
+  margin-left: 24px;
+}
+
+/* Default unselected state */
+.nav-links a[mat-button] {
+  color: #64748b; /* Professional Slate Gray */
+  font-weight: 500;
+  border-radius: 8px; /* Slightly rounded edges */
+  padding: 0 16px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Make the icons sit perfectly next to the text */
+.nav-links a[mat-button] mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+/* Hover effect */
+.nav-links a[mat-button]:hover {
+  background-color: #f1f5f9; /* Very light gray */
+  color: #0f172a; /* Dark text */
+}
+
+/* ACTIVE STATE (When you are on that page) */
+.nav-links a.active-tab {
+  background-color: #e0e7ff; /* Soft light indigo background */
+  color: #3f51b5; /* Primary Material Blue/Indigo */
+  font-weight: 600;
+}

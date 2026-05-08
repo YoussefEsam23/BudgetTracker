@@ -1,0 +1,119 @@
+/* ========================================== */
+/* PREMIUM AUTHENTICATION THEMING             */
+/* ========================================== */
+
+/* 1. The Full-Screen Gradient Background */
+.auth-container {
+  min-height: calc(100vh - 64px); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e2e8f0 100%);
+}
+
+/* 2. The Floating Form Card */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 24px !important; 
+  padding: 32px 24px !important;
+  background: rgba(255, 255, 255, 0.95) !important; 
+  
+  /* The tinted indigo shadow for a glowing effect */
+  box-shadow: 0 25px 50px -12px rgba(67, 56, 202, 0.15), 
+              0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+}
+
+/* 3. The Header Typography */
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.brand-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--primary, #4f46e5);
+  margin-bottom: 16px;
+}
+
+.auth-header h1 {
+  color: #1e293b;
+  font-weight: 800;
+  font-size: 28px;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.auth-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 15px;
+}
+
+/* 4. Form Layout & Inputs */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Make the icons inside the inputs a soft gray */
+mat-icon[matPrefix] {
+  color: #94a3b8;
+  margin-right: 8px;
+}
+
+/* 5. The Main Action Button */
+.submit-btn {
+  height: 48px !important;
+  font-size: 16px !important;
+  border-radius: 12px !important;
+  margin-top: 16px;
+}
+
+/* 6. Error Messages */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ef4444;
+  background-color: #fef2f2;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.error-message mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* 7. The Bottom Toggle Link */
+.toggle-link {
+  text-align: center;
+  margin-top: 24px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.toggle-link a {
+  color: var(--primary, #4f46e5);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.toggle-link a:hover {
+  color: #312e81;
+  text-decoration: underline;
+}

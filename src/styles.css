@@ -1,1 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
+/* --- 1. THE DESIGN SYSTEM (Global Variables) --- */
+:root {
+  /* Brand Colors */
+  --primary-blue: #3f51b5;    /* Matches Material Indigo */
+  --primary-hover: #303f9f;
+  --accent-pink: #ff4081;     /* Matches Material Pink */
+  
+  /* Status Colors */
+  --income-green: #10b981;
+  --expense-red: #ef4444;
+  
+  /* Neutral Colors */
+  --bg-light: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+
+  /* Spacing & Effects */
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 2. BASE RESET --- */
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* --- 3. REUSABLE UTILITIES --- */
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto; /* Used in mat-toolbar to push buttons to the right */
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* --- 4. GLOBAL ANIMATIONS --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* --- FIX SQUISHED FORM BUTTONS --- */
+.form-actions button {
+  min-height: 44px !important; /* Forces a tall, clickable area */
+  padding: 8px 16px !important; /* Adds breathing room inside the button */
+  font-size: 15px !important; 
+  margin-bottom: 8px !important; /* Ensures Cancel and Update don't touch */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Make sure the Cancel button has a little extra top margin so it's separated */
+.form-actions button[color="warn"], 
+.form-actions button:last-child {
+  margin-top: 8px !important;
+}
+
+/* --- FIX BUTTONS SPILLING OUT OF CARDS --- */
+.form-card, .mat-mdc-card {
+  height: auto !important; /* Tells the card it is allowed to grow */
+  min-height: max-content !important;
+  padding-bottom: 50px !important; /* Forces it to wrap all the way around the buttons */
+}
+
+.form-actions {
+  padding-bottom: 16px !important; /* Adds a nice cushion so the button doesn't touch the very bottom edge */
+}

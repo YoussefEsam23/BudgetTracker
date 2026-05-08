@@ -1,0 +1,67 @@
+<!-- The new full-screen background wrapper -->
+<div class="auth-container animate-fade-in">
+  
+  <mat-card class="auth-card">
+    
+    <!-- Premium Centered Header -->
+    <div class="auth-header">
+      <mat-icon class="brand-icon">account_balance_wallet</mat-icon>
+      <h1>{{ isLoginMode ? 'Welcome Back' : 'Create Account' }}</h1>
+      <p>{{ isLoginMode ? 'Manage your finances with ease.' : 'Start taking control of your finances today.' }}</p>
+    </div>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+          <mat-icon matPrefix>email</mat-icon> <!-- Moved to Prefix to match CSS -->
+          <input matInput formControlName="email" placeholder="name@test.com">
+          
+          <!-- Preserved your exact validations -->
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon> <!-- Moved to Prefix to match CSS -->
+          <input matInput type="password" formControlName="password" placeholder="Enter password">
+          
+          <!-- Preserved your exact validations -->
+          <mat-error *ngIf="loginForm.get('password')?.invalid">
+            Password must be at least 6 characters
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Upgraded Error Message Display -->
+        <div class="error-message" *ngIf="errorMessage">
+          <mat-icon>error_outline</mat-icon> {{ errorMessage }}
+        </div>
+
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" class="full-width submit-btn" [disabled]="!loginForm.valid">
+          {{ isLoginMode ? 'Login Securely' : 'Register Now' }}
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <!-- Upgraded Toggle Link -->
+    <div class="toggle-link">
+      <p>
+        {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+        <a href="javascript:void(0)" (click)="toggleMode()">
+          {{ isLoginMode ? 'Sign up here' : 'Log in here' }}
+        </a>
+      </p>
+    </div>
+
+  </mat-card>
+</div>

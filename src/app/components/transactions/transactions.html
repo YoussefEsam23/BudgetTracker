@@ -1,0 +1,180 @@
+<div class="container animate-fade-in">
+  <h1 class="page-title">Manage Transactions</h1>
+
+  <div class="transactions-layout">
+    
+    <!-- ========================================== -->
+    <!-- LEFT SIDE: TRANSACTION FORM                -->
+    <!-- ========================================== -->
+    <mat-card class="form-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>{{ editingId ? 'Edit Transaction' : 'Add New' }}</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="tx-form">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="text" placeholder="e.g. Netflix, Salary">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Amount ($)</mat-label>
+            <input matInput type="number" formControlName="amount" placeholder="0.00">
+          </mat-form-field>
+
+          <!-- DROPDOWN: Budget Category (Only shows for Expenses) -->
+          <mat-form-field appearance="outline" class="full-width" *ngIf="transactionForm.get('type')?.value === 'expense'">
+            <mat-label>Budget Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="Uncategorized">Uncategorized</mat-option>
+              <mat-option *ngFor="let b of budgets" [value]="b.category">
+                {{ b.category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- DROPDOWN: Income Source (Only shows for Income) -->
+          <mat-form-field appearance="outline" class="full-width" *ngIf="transactionForm.get('type')?.value === 'income'">
+            <mat-label>Income Source</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="Uncategorized">Uncategorized</mat-option>
+              <mat-option *ngFor="let source of uniqueIncomeSources" [value]="source">
+                {{ source }}
+              </mat-option>
+              <!-- <mat-divider></mat-divider> -->
+              <mat-option value="NEW_CUSTOM" class="add-custom-option">
+                <mat-icon>add_circle_outline</mat-icon> <strong>Create New Source...</strong>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- HIDDEN INPUT: Only shows if they select "Create New Source..." -->
+          <mat-form-field appearance="outline" class="full-width custom-source-input animate-fade-in" 
+                          *ngIf="transactionForm.get('type')?.value === 'income' && transactionForm.get('category')?.value === 'NEW_CUSTOM'">
+            <mat-label>New Source Name</mat-label>
+            <input matInput formControlName="newCategory" placeholder="e.g. Side Hustle, Bonus">
+          </mat-form-field>
+
+          <div class="type-selector">
+            <label>
+              <input type="radio" formControlName="type" value="income"> Income
+            </label>
+            <label>
+              <input type="radio" formControlName="type" value="expense"> Expense
+            </label>
+          </div>
+
+          <!-- RECURRING CHECKBOX -->
+          <div class="recurring-toggle" *ngIf="transactionForm.get('type')?.value === 'expense'">
+            <label class="checkbox-container">
+              <input type="checkbox" formControlName="isRecurring"> 
+              Mark as a monthly recurring expense
+            </label>
+          </div>
+
+          <div class="form-actions mt-16">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!transactionForm.valid" class="full-width">
+              {{ editingId ? 'Update Transaction' : 'Save Transaction' }}
+            </button>
+            
+            <button *ngIf="editingId" mat-button type="button" color="warn" (click)="cancelEdit()" class="full-width mt-8">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ========================================== -->
+    <!-- RIGHT SIDE: HISTORY & FILTERS              -->
+    <!-- ========================================== -->
+    <mat-card class="history-card mat-elevation-z3">
+      <mat-card-header class="history-header">
+        <mat-card-title>History</mat-card-title>
+      </mat-card-header>
+
+      <!-- ADVANCED FILTERS ROW -->
+      <div class="filters-container">
+        
+        <mat-form-field appearance="outline" class="filter-field search-box">
+          <mat-label>Search</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput (keyup)="onSearch($event)" placeholder="Search...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Type</mat-label>
+          <mat-select [value]="selectedFilterType" (selectionChange)="onTypeFilterChange($event.value)">
+            <mat-option value="all">All Types</mat-option>
+            <mat-option value="income">Income Only</mat-option>
+            <mat-option value="expense">Expenses Only</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- EXPENSE CATEGORY FILTER -->
+        <mat-form-field appearance="outline" class="filter-field" *ngIf="selectedFilterType === 'expense'">
+          <mat-label>Expense Category</mat-label>
+          <mat-select [value]="selectedFilterCategory" (selectionChange)="onCategoryFilterChange($event.value)">
+            <mat-option value="all">All Categories</mat-option>
+            <mat-option value="Uncategorized">Uncategorized</mat-option>
+            <mat-option *ngFor="let b of budgets" [value]="b.category">{{ b.category }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- INCOME SOURCE FILTER -->
+        <mat-form-field appearance="outline" class="filter-field" *ngIf="selectedFilterType === 'income'">
+          <mat-label>Income Source</mat-label>
+          <mat-select [value]="selectedFilterCategory" (selectionChange)="onCategoryFilterChange($event.value)">
+            <mat-option value="all">All Sources</mat-option>
+            <mat-option value="Uncategorized">Uncategorized</mat-option>
+            <mat-option *ngFor="let source of uniqueIncomeSources" [value]="source">{{ source }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <!-- TRANSACTION LIST -->
+      <mat-card-content>
+        <div class="tx-list">
+          <div class="tx-item" *ngFor="let tx of filteredTransactions" [ngClass]="tx.type">
+            
+            <div class="tx-info">
+              <span class="tx-text">{{ tx.text }}</span>
+              <span class="tx-date">
+                {{ tx.date | date:'mediumDate' }} 
+                <span *ngIf="tx.category && tx.category !== 'Uncategorized'"> • {{ tx.category }}</span>
+                
+                <span *ngIf="tx.isRecurring" class="recurring-badge">
+                  <mat-icon class="tiny-icon">autorenew</mat-icon> Recurring
+                </span>
+              </span>
+            </div>
+            
+            <div class="tx-actions-wrapper">
+              <div class="tx-amount">
+                {{ tx.type === 'income' ? '+' : '-' }}${{ tx.amount | number:'1.2-2' }}
+              </div>
+              
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editTransaction(tx)" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTransaction(tx.id)" title="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="empty-state" *ngIf="filteredTransactions.length === 0">
+            <p>No transactions match your filters.</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

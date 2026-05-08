@@ -1,0 +1,105 @@
+<div class="container animate-fade-in">
+  
+  <!-- ========================================== -->
+  <!-- HEADER & PDF EXPORT BUTTON                 -->
+  <!-- ========================================== -->
+  <div class="page-header">
+    <h1 class="page-title">Financial Reports</h1>
+    
+    <button mat-raised-button color="primary" (click)="exportToPDF()" [disabled]="isLoading || isExporting">
+      <mat-icon>{{ isExporting ? 'hourglass_empty' : 'picture_as_pdf' }}</mat-icon> 
+      {{ isExporting ? 'Generating PDF...' : 'Export to PDF' }}
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Generating your reports...</p>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- PDF CONTENT WRAPPER                        -->
+  <!-- ========================================== -->
+  <div id="pdf-content" [hidden]="isLoading" class="reports-layout">
+    
+    <!-- TOP ROW: Three Dynamic Charts -->
+    <div class="charts-row">
+      
+      <!-- REPORT 1: Cash Flow (Bar Chart) -->
+      <mat-card class="report-card mat-elevation-z3">
+        <mat-card-header>
+          <mat-card-title>Income vs. Expenses</mat-card-title>
+          <mat-card-subtitle>Overall Cash Flow (Net: ${{ summary.net | number:'1.2-2' }})</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="chart-container">
+          <canvas #incomeChartCanvas></canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- REPORT 2: Budget Variance (Bar Chart) -->
+      <mat-card class="report-card mat-elevation-z3">
+        <mat-card-header>
+          <mat-card-title>Budget Variance</mat-card-title>
+          <mat-card-subtitle>Planned Limits vs. Actual Spending</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="chart-container">
+          <canvas #varianceChartCanvas></canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- REPORT 3: Expense Breakdown (NEW Doughnut Chart) -->
+      <mat-card class="report-card mat-elevation-z3">
+        <mat-card-header>
+          <mat-card-title>Expense Breakdown</mat-card-title>
+          <mat-card-subtitle>Where your money went</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="chart-container">
+          <canvas #breakdownChartCanvas></canvas>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BOTTOM ROW: Savings Progress Grid          -->
+    <!-- ========================================== -->
+    <mat-card class="report-card full-width-card mat-elevation-z3 mt-24">
+      <mat-card-header>
+        <mat-card-title>Savings Progress</mat-card-title>
+        <mat-card-subtitle>Track your financial goals</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="goals-grid">
+          
+          <div class="goal-item" *ngFor="let g of goalsProgress">
+            <div class="goal-header">
+              <span class="goal-name">{{ g.name }}</span>
+              <span class="goal-amounts">
+                ${{ g.saved | number:'1.0-0' }} / ${{ g.target | number:'1.0-0' }}
+              </span>
+            </div>
+            
+            <div class="progress-bg">
+              <div class="progress-fill" 
+                   [style.width.%]="g.percent"
+                   [ngClass]="{'complete-fill': g.isComplete}">
+              </div>
+            </div>
+            
+            <div class="goal-percent" [ngClass]="{'complete-text': g.isComplete}">
+              {{ g.percent | number:'1.0-1' }}% {{ g.isComplete ? ' - Reached!' : '' }}
+            </div>
+          </div>
+
+          <div class="empty-state" *ngIf="goalsProgress.length === 0">
+            <p>No savings goals found. Go to the Goals tab to create one!</p>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

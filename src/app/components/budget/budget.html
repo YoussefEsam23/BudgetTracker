@@ -1,0 +1,111 @@
+<div class="container animate-fade-in">
+  <h1 class="page-title">Budget Planning</h1>
+
+ <div class="overview-cards">
+    <mat-card class="overview-card income-bg">
+      <mat-card-subtitle>Total Income Pool</mat-card-subtitle>
+      <h2>${{ totalIncome | number:'1.2-2' }}</h2>
+    </mat-card>
+    
+    <mat-card class="overview-card" [ngStyle]="{'background-color': '#3f51b5'}">
+      <mat-card-subtitle>Allocated to Categories</mat-card-subtitle>
+      <h2>${{ totalBudgeted | number:'1.2-2' }}</h2>
+    </mat-card>
+
+    <mat-card class="overview-card" [ngClass]="unallocatedFunds < 0 ? 'expense-bg' : 'income-bg'">
+      <mat-card-subtitle>Unallocated Funds (Left to Plan)</mat-card-subtitle>
+      <h2>${{ unallocatedFunds | number:'1.2-2' }}</h2>
+      
+      <!-- NEW: The Explanation Message -->
+      <div class="savings-hint" *ngIf="totalSaved > 0">
+        *Includes ${{ totalSaved | number:'1.2-2' }} locked in Savings Goals
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="budget-layout">
+    
+    <!-- LEFT SIDE: Form -->
+    <mat-card class="form-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>{{ editingId ? 'Edit Budget Category' : 'Create Category Limit' }}</mat-card-title>
+        <mat-card-subtitle>Set a monthly limit</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <form [formGroup]="budgetForm" (ngSubmit)="onSubmit()" class="budget-form">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Category Name (e.g., Groceries)</mat-label>
+            <input matInput formControlName="category" placeholder="Enter category name">
+            <mat-icon matSuffix>category</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Monthly Limit ($)</mat-label>
+            <input matInput type="number" formControlName="amount" placeholder="0.00">
+            <mat-icon matSuffix>attach_money</mat-icon>
+          </mat-form-field>
+
+          <div class="form-actions mt-16">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!budgetForm.valid" class="full-width">
+              {{ editingId ? 'Update Budget' : 'Set Budget Limit' }}
+            </button>
+            <button *ngIf="editingId" mat-button type="button" color="warn" (click)="cancelEdit()" class="full-width mt-8">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- RIGHT SIDE: List -->
+    <mat-card class="list-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>Active Budgets</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="budget-list">
+          <div class="budget-item" *ngFor="let b of budgets">
+            
+            <div class="budget-header">
+              <span class="category-name">{{ b.category }}</span>
+              
+              <div class="budget-actions-wrapper">
+                <span class="amounts" [ngClass]="{'over-budget-text': b.isOverBudget}">
+                  ${{ b.spent | number:'1.0-0' }} / ${{ b.amount | number:'1.0-0' }}
+                </span>
+                
+                <div class="action-buttons">
+                  <button mat-icon-button color="primary" (click)="editBudget(b)" title="Edit">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteBudget(b.id)" title="Delete">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-bg">
+              <div class="progress-fill" 
+                   [style.width.%]="b.progress"
+                   [ngClass]="{'over-budget-fill': b.isOverBudget, 'warning-fill': b.progress > 80 && !b.isOverBudget}">
+              </div>
+            </div>
+
+            <div class="status-text" *ngIf="b.isOverBudget">
+              You have exceeded this budget!
+            </div>
+          </div>
+
+          <div class="empty-state" *ngIf="budgets.length === 0">
+            <p>No budgets created yet. Start by adding a category!</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

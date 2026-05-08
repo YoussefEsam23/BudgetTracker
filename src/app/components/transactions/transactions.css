@@ -1,0 +1,255 @@
+/* ========================================== */
+/* BASE LAYOUT & TYPOGRAPHY                   */
+/* ========================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-title {
+  color: var(--primary-blue);
+  margin-bottom: 24px;
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.transactions-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .transactions-layout {
+    flex-direction: column;
+  }
+}
+
+.form-card {
+  flex: 1;
+  min-width: 300px;
+  border-radius: var(--radius-lg);
+}
+
+.history-card {
+  flex: 2;
+  min-width: 300px;
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+
+/* ========================================== */
+/* FORM ELEMENTS                              */
+/* ========================================== */
+.tx-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.type-selector {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.type-selector label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* Custom Income Source Feature */
+.add-custom-option {
+  color: #3f51b5 !important;
+  background-color: #f8fafc;
+}
+
+.add-custom-option mat-icon {
+  margin-right: 8px;
+  color: #3f51b5;
+}
+
+.custom-source-input {
+  margin-top: -8px;
+}
+
+/* Recurring Checkbox */
+.recurring-toggle {
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #475569;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.checkbox-container input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================== */
+/* ADVANCED FILTERS ROW                       */
+/* ========================================== */
+.history-header {
+  margin-bottom: 8px; 
+}
+
+.filters-container {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px 16px 16px;
+  flex-wrap: wrap; 
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 16px;
+}
+
+.filter-field {
+  flex: 1; 
+  min-width: 140px;
+  margin-bottom: -16px; 
+}
+
+.search-box {
+  flex: 2; 
+  min-width: 200px;
+}
+
+/* ========================================== */
+/* TRANSACTION LIST & ITEMS                   */
+/* ========================================== */
+.tx-list {
+  max-height: 440px; 
+  overflow-y: auto;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tx-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tx-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.tx-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.tx-text {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+}
+
+.tx-date {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.tx-actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tx-amount {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Color Coding */
+.tx-item.income { border-left: 4px solid var(--income-green); }
+.tx-item.income .tx-amount { color: var(--income-green); }
+
+.tx-item.expense { border-left: 4px solid var(--expense-red); }
+.tx-item.expense .tx-amount { color: var(--expense-red); }
+
+/* Badges */
+.recurring-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0e7ff; 
+  color: #3f51b5; 
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.tiny-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+
+/* Action Hover Buttons */
+.action-buttons {
+  display: flex;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+
+.tx-item:hover .action-buttons {
+  opacity: 1;
+}
+
+.empty-state {
+  text-align: center;
+  color: gray;
+  padding: 24px 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .action-buttons { opacity: 1; }
+  .tx-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .tx-actions-wrapper { width: 100%; justify-content: space-between; }
+}

@@ -1,0 +1,95 @@
+<div class="container animate-fade-in">
+  <h1 class="page-title">Financial Goals</h1>
+
+  <div class="goals-layout">
+    
+    <mat-card class="form-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>{{ editingId ? 'Edit Goal' : 'Create a New Goal' }}</mat-card-title>
+        <mat-card-subtitle>What are you saving for?</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <form [formGroup]="goalForm" (ngSubmit)="onSubmit()" class="goal-form">
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Goal Name (e.g., Vacation, Car)</mat-label>
+            <input matInput formControlName="name" placeholder="Enter goal name">
+            <mat-icon matSuffix>flag</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Target Amount ($)</mat-label>
+            <input matInput type="number" formControlName="targetAmount" placeholder="0.00">
+            <mat-icon matSuffix>track_changes</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Current Saved Amount ($)</mat-label>
+            <input matInput type="number" formControlName="savedAmount" placeholder="0.00">
+            <mat-icon matSuffix>savings</mat-icon>
+          </mat-form-field>
+
+          <div class="form-actions mt-16">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!goalForm.valid" class="full-width">
+              {{ editingId ? 'Update Goal' : 'Set Goal' }}
+            </button>
+            <button *ngIf="editingId" mat-button type="button" color="warn" (click)="cancelEdit()" class="full-width mt-8">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- RIGHT SIDE: Display Active Goals -->
+    <mat-card class="list-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>Your Progress</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="goal-list">
+          
+          <div class="goal-item" *ngFor="let g of goals">
+            <div class="goal-header">
+              <span class="goal-name">{{ g.name }}</span>
+              
+              <div class="goal-actions-wrapper">
+                <span class="amounts">
+                  ${{ g.savedAmount | number:'1.0-0' }} / ${{ g.targetAmount | number:'1.0-0' }}
+                </span>
+                
+                <div class="action-buttons">
+                  <button mat-icon-button color="primary" (click)="editGoal(g)" title="Edit">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteGoal(g.id)" title="Delete">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-bg">
+              <div class="progress-fill" [style.width.%]="g.progress"></div>
+            </div>
+
+            <!-- NEW: Percentage Display -->
+            <div class="goal-percent" [ngClass]="{'complete-text': g.progress >= 100}">
+              {{ g.progress | number:'1.0-1' }}% 
+              <span *ngIf="g.progress >= 100"> - 🎉 Goal Reached!</span>
+            </div>
+
+          </div>
+
+          <div class="empty-state" *ngIf="goals.length === 0">
+            <p>No goals yet. Start dreaming big!</p>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

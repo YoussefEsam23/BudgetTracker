@@ -1,0 +1,123 @@
+/* --- NEW: Header Alignment --- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  color: var(--primary-blue);
+  font-weight: 500;
+  font-size: 28px;
+  margin-bottom: 0; /* Removes default margin so it aligns with button */
+}
+
+/* ... keep the rest of your reports.css below this ... */
+
+.page-title {
+  color: var(--primary-blue);
+  margin-bottom: 24px;
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.reports-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Charts Side by Side */
+.charts-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.report-card {
+  flex: 1;
+  min-width: 320px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+}
+
+.chart-container {
+  height: 300px;
+  position: relative;
+  margin-top: 16px;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+/* Savings Progress Styles */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.goal-item {
+  padding: 16px;
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.goal-name {
+  font-weight: 700;
+  color: #333;
+}
+
+.goal-amounts {
+  font-size: 14px;
+  color: #666;
+}
+
+.progress-bg {
+  width: 100%;
+  height: 10px;
+  background-color: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #3f51b5; /* Standard blue */
+  border-radius: 5px;
+  transition: width 0.8s ease-in-out;
+}
+
+.complete-fill {
+  background-color: #10b981; /* Turns green when 100% */
+}
+
+.goal-percent {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #888;
+  text-align: right;
+  font-weight: 500;
+}
+
+.complete-text {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: gray;
+  padding: 24px 0;
+  font-style: italic;
+}

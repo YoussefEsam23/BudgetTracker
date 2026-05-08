@@ -1,0 +1,116 @@
+<div class="container animate-fade-in">
+  <h1 class="page-title">Command Center</h1>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Crunching the numbers...</p>
+  </div>
+
+  <div [hidden]="isLoading">
+    
+    <!-- TOP ROW: Key Metrics (Now perfectly balanced with 3 cards) -->
+    <div class="overview-cards">
+      <mat-card class="balance-card mat-elevation-z3">
+        <mat-icon class="card-icon">account_balance_wallet</mat-icon>
+        <div class="card-text">
+          <mat-card-subtitle>Total Balance</mat-card-subtitle>
+          <h2>${{ totalBalance | number:'1.2-2' }}</h2>
+        </div>
+      </mat-card>
+
+      <mat-card class="income-card mat-elevation-z3">
+        <mat-icon class="card-icon">trending_up</mat-icon>
+        <div class="card-text">
+          <mat-card-subtitle>Total Income</mat-card-subtitle>
+          <h2>${{ totalIncome | number:'1.2-2' }}</h2>
+        </div>
+      </mat-card>
+
+      <mat-card class="expense-card mat-elevation-z3">
+        <mat-icon class="card-icon">trending_down</mat-icon>
+        <div class="card-text">
+          <mat-card-subtitle>Total Expenses</mat-card-subtitle>
+          <h2>${{ totalExpense | number:'1.2-2' }}</h2>
+        </div>
+      </mat-card>
+    </div>
+
+    <!-- MIDDLE ROW: Smart Hub Layout -->
+    <div class="smart-hub-grid">
+      
+      <!-- LEFT COL: The Main Chart -->
+      <mat-card class="chart-card mat-elevation-z3">
+        <mat-card-header>
+          <mat-card-title>Income Distribution</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas #financeChart></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- RIGHT COL: Feed & Alerts -->
+      <div class="feed-column">
+        
+        <!-- MODULE: Goal Spotlight -->
+        <mat-card class="spotlight-card mat-elevation-z3" *ngIf="topGoal">
+          <mat-card-header>
+            <mat-icon class="header-icon">stars</mat-icon>
+            <mat-card-title>Goal Spotlight</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="spotlight-info">
+              <strong>{{ topGoal.name }}</strong>
+              <span>${{ topGoal.savedAmount | number:'1.0-0' }} / ${{ topGoal.targetAmount | number:'1.0-0' }}</span>
+            </div>
+            <div class="progress-bg">
+              <div class="progress-fill" [style.width.%]="topGoal.percent"></div>
+            </div>
+            <p class="spotlight-text">You are {{ topGoal.percent | number:'1.0-1' }}% there. Keep going!</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- MODULE: Budget Warnings -->
+        <mat-card class="alert-card mat-elevation-z3" *ngIf="budgetAlerts.length > 0">
+          <mat-card-header>
+            <mat-icon class="header-icon warn-icon">warning</mat-icon>
+            <mat-card-title>Budget Warnings</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="alert-item" *ngFor="let alert of budgetAlerts">
+              <span class="alert-name">{{ alert.category }}</span>
+              <span class="alert-percent">{{ alert.percentage | number:'1.0-0' }}% Spent</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- MODULE: Recent Activity -->
+        <mat-card class="activity-card mat-elevation-z3">
+          <mat-card-header>
+            <mat-icon class="header-icon">history</mat-icon>
+            <mat-card-title>Recent Activity</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="activity-list">
+              <div class="activity-item" *ngFor="let tx of recentTransactions">
+                <div class="activity-text">
+                  <strong>{{ tx.text }}</strong>
+                  <span class="activity-date">{{ tx.date | date:'shortDate' }}</span>
+                </div>
+                <div class="activity-amount" [ngClass]="tx.type">
+                  {{ tx.type === 'income' ? '+' : '-' }}${{ tx.amount | number:'1.2-2' }}
+                </div>
+              </div>
+              <div class="empty-state" *ngIf="recentTransactions.length === 0">
+                No recent activity.
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </div>
+
+  </div>
+</div>
