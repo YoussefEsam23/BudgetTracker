@@ -10,16 +10,13 @@ import { Auth } from '@angular/fire/auth';
 })
 export class App {
   
-  // THE FIX: Added 'public auth: Auth' so the HTML template can read auth.currentUser
   constructor(private router: Router, public auth: Auth) {}
 
-  // Helper to hide navbar on login
   isLoginPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/';
   }
 
   onLogout() {
-    // Upgraded: Actually signs the user out of Firebase before redirecting
     this.auth.signOut().then(() => {
       this.router.navigate(['/login']);
     }).catch(error => {

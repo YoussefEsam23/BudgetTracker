@@ -1,6 +1,3 @@
-/* ========================================== */
-/* BASE LAYOUT & ANIMATIONS                   */
-/* ========================================== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -24,41 +21,32 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========================================== */
-/* MAIN LAYOUT STRUCTURE                      */
-/* ========================================== */
 .transactions-layout {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  align-items: flex-start; /* Prevents cards from stretching vertically */
+  align-items: flex-start; 
 }
 
-/* The Left Side (Form) */
 .form-card {
   flex: 1;
   min-width: 320px;
   border-radius: 16px !important;
-  border-top: 5px solid #3b82f6 !important; /* Blue Accent */
+  border-top: 5px solid #3b82f6 !important; 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* The Right Side (History) */
 .history-card {
-  flex: 2; /* Takes up twice as much space as the form */
+  flex: 2;
   min-width: 350px;
   border-radius: 16px !important;
-  border-top: 5px solid #6366f1 !important; /* Indigo Accent */
+  border-top: 5px solid #6366f1 !important; 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* ========================================== */
-/* FORM ELEMENTS                              */
-/* ========================================== */
 .tx-form { margin-top: 8px; }
 .full-width { width: 100%; }
 
-/* Style the Radio Buttons area to look like a clean control box */
 .type-selector {
   display: flex;
   gap: 24px;
@@ -81,15 +69,12 @@
 .mt-16 { margin-top: 16px; }
 .mt-8 { margin-top: 8px; }
 
-/* ========================================== */
-/* FILTERS SECTION                            */
-/* ========================================== */
 .filters-container {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
   padding: 16px;
-  background-color: #f1f5f9; /* Light slate background */
+  background-color: #f1f5f9; 
   border-radius: 12px;
   margin: 0 16px 24px 16px;
 }
@@ -99,15 +84,11 @@
   min-width: 150px;
 }
 
-/* Make the search box take up more room */
 .search-box {
   flex: 2; 
   min-width: 200px;
 }
 
-/* ========================================== */
-/* TRANSACTION LIST & ITEMS                   */
-/* ========================================== */
 .tx-list {
   display: flex;
   flex-direction: column;
@@ -126,17 +107,14 @@
   transition: all 0.2s ease;
 }
 
-/* 🌟 GENIUS TOUCH: Semantic Color Borders! */
-.tx-item.income { border-left: 6px solid #10b981; } /* Thick Green line */
-.tx-item.expense { border-left: 6px solid #ef4444; } /* Thick Red line */
+.tx-item.income { border-left: 6px solid #10b981; } 
+.tx-item.expense { border-left: 6px solid #ef4444; }
 
-/* 🌟 GENIUS TOUCH: Hover Elevation! */
 .tx-item:hover {
-  transform: translateY(-3px); /* Lifts the card up slightly */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Adds a deeper shadow */
+  transform: translateY(-3px); 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
 }
 
-/* Typography inside the item */
 .tx-info {
   display: flex;
   flex-direction: column;
@@ -157,19 +135,14 @@
   gap: 8px;
 }
 
-/* ========================================== */
-/* BADGES & AMOUNTS                           */
-/* ========================================== */
-
-/* 🌟 GENIUS TOUCH: The Recurring "Pill" Badge */
 .recurring-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #e0e7ff; /* Soft indigo background */
-  color: #4338ca; /* Dark indigo text */
+  background-color: #e0e7ff; 
+  color: #4338ca; 
   padding: 4px 10px;
-  border-radius: 16px; /* Pill shape */
+  border-radius: 16px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -188,15 +161,10 @@
   gap: 20px;
 }
 
-/* Color Code the actual money amounts */
 .tx-amount { font-size: 18px; font-weight: 800; }
 .tx-item.income .tx-amount { color: #10b981; }
 .tx-item.expense .tx-amount { color: #ef4444; }
 
-/* ========================================== */
-/* ACTION BUTTONS (CLEAN UI TRICK)            */
-/* ========================================== */
-/* Hide the edit/delete buttons until the user hovers over the row */
 .action-buttons {
   display: flex;
   opacity: 0;
@@ -209,7 +177,6 @@
   transform: translateX(0);
 }
 
-/* Always show buttons on mobile phones */
 @media (max-width: 768px) {
   .action-buttons { 
     opacity: 1; 
