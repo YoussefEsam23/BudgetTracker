@@ -1,11 +1,7 @@
 <div class="container animate-fade-in">
   <h1 class="page-title">Manage Transactions</h1>
-
   <div class="transactions-layout">
-    
-    <!-- ========================================== -->
-    <!-- LEFT SIDE: TRANSACTION FORM                -->
-    <!-- ========================================== -->
+   
     <mat-card class="form-card mat-elevation-z3">
       <mat-card-header>
         <mat-card-title>{{ editingId ? 'Edit Transaction' : 'Add New' }}</mat-card-title>
@@ -24,7 +20,6 @@
             <input matInput type="number" formControlName="amount" placeholder="0.00">
           </mat-form-field>
 
-          <!-- DROPDOWN: Budget Category (Only shows for Expenses) -->
           <mat-form-field appearance="outline" class="full-width" *ngIf="transactionForm.get('type')?.value === 'expense'">
             <mat-label>Budget Category</mat-label>
             <mat-select formControlName="category">
@@ -35,7 +30,6 @@
             </mat-select>
           </mat-form-field>
 
-          <!-- DROPDOWN: Income Source (Only shows for Income) -->
           <mat-form-field appearance="outline" class="full-width" *ngIf="transactionForm.get('type')?.value === 'income'">
             <mat-label>Income Source</mat-label>
             <mat-select formControlName="category">
@@ -43,14 +37,13 @@
               <mat-option *ngFor="let source of uniqueIncomeSources" [value]="source">
                 {{ source }}
               </mat-option>
-              <!-- <mat-divider></mat-divider> -->
+
               <mat-option value="NEW_CUSTOM" class="add-custom-option">
                 <mat-icon>add_circle_outline</mat-icon> <strong>Create New Source...</strong>
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <!-- HIDDEN INPUT: Only shows if they select "Create New Source..." -->
           <mat-form-field appearance="outline" class="full-width custom-source-input animate-fade-in" 
                           *ngIf="transactionForm.get('type')?.value === 'income' && transactionForm.get('category')?.value === 'NEW_CUSTOM'">
             <mat-label>New Source Name</mat-label>
@@ -66,7 +59,6 @@
             </label>
           </div>
 
-          <!-- RECURRING CHECKBOX -->
           <div class="recurring-toggle" *ngIf="transactionForm.get('type')?.value === 'expense'">
             <label class="checkbox-container">
               <input type="checkbox" formControlName="isRecurring"> 
@@ -87,15 +79,11 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- ========================================== -->
-    <!-- RIGHT SIDE: HISTORY & FILTERS              -->
-    <!-- ========================================== -->
     <mat-card class="history-card mat-elevation-z3">
       <mat-card-header class="history-header">
         <mat-card-title>History</mat-card-title>
       </mat-card-header>
 
-      <!-- ADVANCED FILTERS ROW -->
       <div class="filters-container">
         
         <mat-form-field appearance="outline" class="filter-field search-box">
@@ -113,7 +101,6 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- EXPENSE CATEGORY FILTER -->
         <mat-form-field appearance="outline" class="filter-field" *ngIf="selectedFilterType === 'expense'">
           <mat-label>Expense Category</mat-label>
           <mat-select [value]="selectedFilterCategory" (selectionChange)="onCategoryFilterChange($event.value)">
@@ -123,7 +110,6 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- INCOME SOURCE FILTER -->
         <mat-form-field appearance="outline" class="filter-field" *ngIf="selectedFilterType === 'income'">
           <mat-label>Income Source</mat-label>
           <mat-select [value]="selectedFilterCategory" (selectionChange)="onCategoryFilterChange($event.value)">
@@ -135,7 +121,6 @@
 
       </div>
 
-      <!-- TRANSACTION LIST -->
       <mat-card-content>
         <div class="tx-list">
           <div class="tx-item" *ngFor="let tx of filteredTransactions" [ngClass]="tx.type">

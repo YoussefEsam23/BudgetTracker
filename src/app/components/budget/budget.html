@@ -16,7 +16,6 @@
       <mat-card-subtitle>Unallocated Funds (Left to Plan)</mat-card-subtitle>
       <h2>${{ unallocatedFunds | number:'1.2-2' }}</h2>
       
-      <!-- NEW: The Explanation Message -->
       <div class="savings-hint" *ngIf="totalSaved > 0">
         *Includes ${{ totalSaved | number:'1.2-2' }} locked in Savings Goals
       </div>

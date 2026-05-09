@@ -3,7 +3,6 @@
   
   <mat-card class="auth-card">
     
-    <!-- Premium Centered Header -->
     <div class="auth-header">
       <mat-icon class="brand-icon">account_balance_wallet</mat-icon>
       <h1>{{ isLoginMode ? 'Welcome Back' : 'Create Account' }}</h1>
@@ -16,10 +15,9 @@
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email Address</mat-label>
-          <mat-icon matPrefix>email</mat-icon> <!-- Moved to Prefix to match CSS -->
+          <mat-icon matPrefix>email</mat-icon>
           <input matInput formControlName="email" placeholder="name@test.com">
           
-          <!-- Preserved your exact validations -->
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
             Email is required
           </mat-error>
@@ -31,16 +29,14 @@
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Password</mat-label>
-          <mat-icon matPrefix>lock</mat-icon> <!-- Moved to Prefix to match CSS -->
+          <mat-icon matPrefix>lock</mat-icon>
           <input matInput type="password" formControlName="password" placeholder="Enter password">
           
-          <!-- Preserved your exact validations -->
           <mat-error *ngIf="loginForm.get('password')?.invalid">
             Password must be at least 6 characters
           </mat-error>
         </mat-form-field>
 
-        <!-- Upgraded Error Message Display -->
         <div class="error-message" *ngIf="errorMessage">
           <mat-icon>error_outline</mat-icon> {{ errorMessage }}
         </div>
@@ -53,7 +49,7 @@
       </form>
     </mat-card-content>
 
-    <!-- Upgraded Toggle Link -->
+    <!-- Toggle Link -->
     <div class="toggle-link">
       <p>
         {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}

@@ -8,7 +8,7 @@
 
   <div [hidden]="isLoading">
     
-    <!-- TOP ROW: Key Metrics (Now perfectly balanced with 3 cards) -->
+    <!-- 3 Top Cards -->
     <div class="overview-cards">
       <mat-card class="balance-card mat-elevation-z3">
         <mat-icon class="card-icon">account_balance_wallet</mat-icon>
@@ -35,10 +35,9 @@
       </mat-card>
     </div>
 
-    <!-- MIDDLE ROW: Smart Hub Layout -->
+    <!-- Middle content -->
     <div class="smart-hub-grid">
       
-      <!-- LEFT COL: The Main Chart -->
       <mat-card class="chart-card mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>Income Distribution</mat-card-title>
@@ -50,10 +49,8 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- RIGHT COL: Feed & Alerts -->
       <div class="feed-column">
         
-        <!-- MODULE: Goal Spotlight -->
         <mat-card class="spotlight-card mat-elevation-z3" *ngIf="topGoal">
           <mat-card-header>
             <mat-icon class="header-icon">stars</mat-icon>
@@ -71,7 +68,6 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- MODULE: Budget Warnings -->
         <mat-card class="alert-card mat-elevation-z3" *ngIf="budgetAlerts.length > 0">
           <mat-card-header>
             <mat-icon class="header-icon warn-icon">warning</mat-icon>
@@ -85,7 +81,6 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- MODULE: Recent Activity -->
         <mat-card class="activity-card mat-elevation-z3">
           <mat-card-header>
             <mat-icon class="header-icon">history</mat-icon>

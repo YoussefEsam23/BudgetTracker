@@ -1,8 +1,4 @@
 <div class="container animate-fade-in">
-  
-  <!-- ========================================== -->
-  <!-- HEADER & PDF EXPORT BUTTON                 -->
-  <!-- ========================================== -->
   <div class="page-header">
     <h1 class="page-title">Financial Reports</h1>
     
@@ -18,15 +14,14 @@
     <p>Generating your reports...</p>
   </div>
 
-  <!-- ========================================== -->
-  <!-- PDF CONTENT WRAPPER                        -->
-  <!-- ========================================== -->
+  <!-- PDF CONTENT -->
+
   <div id="pdf-content" [hidden]="isLoading" class="reports-layout">
     
-    <!-- TOP ROW: Three Dynamic Charts -->
+    <!-- TOP ROW -->
     <div class="charts-row">
       
-      <!-- REPORT 1: Cash Flow (Bar Chart) -->
+      <!-- report 1 -->
       <mat-card class="report-card mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>Income vs. Expenses</mat-card-title>
@@ -37,7 +32,7 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- REPORT 2: Budget Variance (Bar Chart) -->
+      <!-- report 2-->
       <mat-card class="report-card mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>Budget Variance</mat-card-title>
@@ -48,7 +43,7 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- REPORT 3: Expense Breakdown (NEW Doughnut Chart) -->
+      <!-- report 3-->
       <mat-card class="report-card mat-elevation-z3">
         <mat-card-header>
           <mat-card-title>Expense Breakdown</mat-card-title>
@@ -61,9 +56,8 @@
 
     </div>
 
-    <!-- ========================================== -->
-    <!-- BOTTOM ROW: Savings Progress Grid          -->
-    <!-- ========================================== -->
+    <!-- buttom row          -->
+
     <mat-card class="report-card full-width-card mat-elevation-z3 mt-24">
       <mat-card-header>
         <mat-card-title>Savings Progress</mat-card-title>

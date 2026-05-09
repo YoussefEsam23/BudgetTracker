@@ -42,7 +42,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- RIGHT SIDE: Display Active Goals -->
     <mat-card class="list-card mat-elevation-z3">
       <mat-card-header>
         <mat-card-title>Your Progress</mat-card-title>
@@ -75,7 +74,6 @@
               <div class="progress-fill" [style.width.%]="g.progress"></div>
             </div>
 
-            <!-- NEW: Percentage Display -->
             <div class="goal-percent" [ngClass]="{'complete-text': g.progress >= 100}">
               {{ g.progress | number:'1.0-1' }}% 
               <span *ngIf="g.progress >= 100"> -  Goal Reached!</span>
